@@ -8,6 +8,8 @@
 import UIKit
 
 class MovieListViewController: UIViewController {
+    
+    var viewModel: MovieListViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,8 +18,7 @@ class MovieListViewController: UIViewController {
     }
  
     @IBAction func nextButtonTapped(_ sender: Any) {
-        let detailsVC = MovieDetailsViewController.controllerFromStoryboard("Main")
-        self.navigationController?.show(detailsVC, sender: nil)
+        viewModel.didTapNextButton()
     }
     
 }

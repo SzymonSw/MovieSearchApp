@@ -6,3 +6,12 @@
 //
 
 import Foundation
+class MovieDetailsViewModel {
+    
+    private let requestManager: RequestManager
+    
+    init(requestManager: RequestManager) {
+        self.requestManager = requestManager
+    }
+
+}
