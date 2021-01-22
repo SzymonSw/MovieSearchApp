@@ -8,7 +8,7 @@
 import Foundation
 
 enum OMDBApi: URLRequestConvertible {
-    case searchRepositories(query: String)
+    case searchRepositories(query: String, page: Int)
     
     static let apiKey = "b9bd48a6"
 
@@ -32,8 +32,8 @@ enum OMDBApi: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .searchRepositories (let queryString):
-            let path = "/?apikey=\(OMDBApi.apiKey)&s=\(queryString)&type=movie"
+        case .searchRepositories (let queryString, let page):
+            let path = "/?apikey=\(OMDBApi.apiKey)&s=\(queryString)&type=movie&page=\(page)&r=json"
             let escapedurlString = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             return escapedurlString
 
