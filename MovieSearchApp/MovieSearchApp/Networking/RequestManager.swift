@@ -47,8 +47,8 @@ class RequestManager {
                 return
             }
             
-            let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
-            print(jsonRaw)
+          //  let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
+          //  print(jsonRaw)
             
             let jsonDecoder = JSONDecoder()
             let dateFormatter = DateFormatter.default

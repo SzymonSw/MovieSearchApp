@@ -71,15 +71,28 @@ class MovieListViewModel: NSObject {
         isLoading.value = true
         currentRequestTask?.cancel()
         currentRequestTask = requestManager.makeRequest(requestData: OMDBApi.searchRepositories(query: currentQuerry, page: pageNumber), resultType: MovieSearchResult.self) { (movieSearchResult) in
+            self.isLoading.value = false
             
-            if (movieSearchResult.search.count > 0) {
+            guard movieSearchResult.response == "True",
+                  let searchItems = movieSearchResult.search,
+                  let totalResultsString = movieSearchResult.totalResults,
+                  let totalResults = Int(totalResultsString) else {
+                
+                if let errorText = movieSearchResult.error, let parsedError = MovieAppError(rawValue: errorText) {
+                    self.error.value = parsedError
+                } else {
+                    self.error.value = .unknowenBackendError
+                }
+                return
+            }
+            
+            if (searchItems.count > 0) {
                 self.pageNumber += 1
-                self.moviesList.value.append(contentsOf: movieSearchResult.search)
-                if self.moviesList.value.count == Int(movieSearchResult.totalResults)! {
+                self.moviesList.value.append(contentsOf: searchItems)
+                if self.moviesList.value.count == totalResults {
                     self.reachedEnd = true
                 }
             }
-            self.isLoading.value = false
 
         } fail: { (error) in
             self.isLoading.value = false

@@ -12,7 +12,11 @@ enum MovieAppError: String, Error {
     case responseParsingError
     case unknowenBackendError
     case cancelledRequest
-
+    
+    //Errors from OMDB
+    case tooManyResults = "Too many results."
+    case movieNotFound = "Movie not found!"
+    
     var title: String {
         switch self {
         default:
@@ -28,8 +32,9 @@ enum MovieAppError: String, Error {
             return "Could not parse response data."
         case .unknowenBackendError:
             return "Oops something went wrong, please try again later."
-        case .cancelledRequest:
+        default:
             return ""
+    
         }
     }
 }

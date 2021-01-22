@@ -8,12 +8,16 @@
 import Foundation
 
 struct MovieSearchResult: Codable {
-    let search: [MovieData]
-    let totalResults, response: String
+    let search: [MovieData]?
+    let totalResults: String?
+    let response: String
+    let error: String?
 
     enum CodingKeys: String, CodingKey {
         case search = "Search"
         case totalResults
         case response = "Response"
+        case error = "Error"
+
     }
 }
