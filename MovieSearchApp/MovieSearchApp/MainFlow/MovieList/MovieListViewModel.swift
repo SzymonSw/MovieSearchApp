@@ -22,7 +22,15 @@ class MovieListViewModel {
     }
     
     func didTapNextButton() {
-        delegate.wantsToShowMovieDetails()
+        //delegate.wantsToShowMovieDetails()
+        
+        let _ = requestManager.makeRequest(requestData: OMDBApi.searchRepositories(query: "bull"), resultType: MovieSearchResult.self) { (movieSearchResult) in
+            print(movieSearchResult)
+            
+        } fail: { (error) in
+            print(error)
+        }
+
     }
 
 }
