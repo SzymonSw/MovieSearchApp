@@ -42,6 +42,7 @@ class MovieListViewModel: NSObject {
 
         if (newText == nil || newText! == "") {
             currentQuerry = nil
+            self.error.value = nil
 
         } else {
             currentQuerry = newText
