@@ -12,6 +12,8 @@ class MovieListViewController: UIViewController {
     
     var viewModel: MovieListViewModel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
     
     private let cellIndentifier = "movieCell"
     private let searchController = UISearchController(searchResultsController: nil)
@@ -58,11 +60,11 @@ class MovieListViewController: UIViewController {
         }
         
         viewModel.error.bind(to: self) { (me, value) in
-            if value == .tooManyResults {
-                self.tooManyRequestsHeaderView?.isHidden = false
+            if let error = value, let errorMessage = error.message {
+                self.errorView.isHidden = false
+                self.errorLabel.text = errorMessage
             } else {
-                self.tooManyRequestsHeaderView?.isHidden = true
-
+                self.errorView.isHidden = true
             }
         }
     }
@@ -94,16 +96,6 @@ extension MovieListViewController: UICollectionViewDataSource {
             loadingFooterView = footer
             footer.isHidden = !viewModel.isLoading.value
             return footer
-            
-        case UICollectionView.elementKindSectionHeader:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "tooManyResultsHeader", for: indexPath)
-            tooManyRequestsHeaderView = header
-            if viewModel.error.value != nil && viewModel.error.value  == .tooManyResults {
-                header.isHidden = false
-            } else {
-                header.isHidden = true
-            }
-            return header
             
             
         default:

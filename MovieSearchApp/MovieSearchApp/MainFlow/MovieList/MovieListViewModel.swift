@@ -85,7 +85,8 @@ class MovieListViewModel: NSObject {
                 }
                 return
             }
-            
+            self.error.value = nil
+
             if (searchItems.count > 0) {
                 self.pageNumber += 1
                 self.moviesList.value.append(contentsOf: searchItems)

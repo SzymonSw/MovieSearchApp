@@ -24,7 +24,7 @@ enum MovieAppError: String, Error {
         }
     }
     
-    var message: String {
+    var message: String? {
         switch self {
         case .emptyResponseData:
             return "Response data seems to be empty."
@@ -32,8 +32,12 @@ enum MovieAppError: String, Error {
             return "Could not parse response data."
         case .unknowenBackendError:
             return "Oops something went wrong, please try again later."
+        case .tooManyResults:
+            return "Plese be more specific"
+        case .movieNotFound:
+            return "There is no such movie in database"
         default:
-            return ""
+            return nil
     
         }
     }

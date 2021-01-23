@@ -23,13 +23,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Pg9-Ri-vsd">
                                     <size key="itemSize" width="194" height="184"/>
-                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieCell" id="Cw3-Lt-J2c" customClass="MovieCell" customModule="MovieSearchApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="194" height="184"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="194" height="184"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="elq-yr-Fjt">
                                             <rect key="frame" x="0.0" y="0.0" width="194" height="184"/>
@@ -74,26 +74,8 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="tooManyResultsHeader" id="ORV-8F-fGe" userLabel="Too many results header">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please be more specific" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2L-cS-Nt8">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="w2L-cS-Nt8" secondAttribute="bottom" id="8cI-YJ-1JS"/>
-                                        <constraint firstItem="w2L-cS-Nt8" firstAttribute="leading" secondItem="ORV-8F-fGe" secondAttribute="leading" id="Avk-Sy-Aqc"/>
-                                        <constraint firstAttribute="trailing" secondItem="w2L-cS-Nt8" secondAttribute="trailing" id="SEV-25-29L"/>
-                                        <constraint firstItem="w2L-cS-Nt8" firstAttribute="top" secondItem="ORV-8F-fGe" secondAttribute="top" id="es4-6k-690"/>
-                                    </constraints>
-                                </collectionReusableView>
                                 <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingFooter" id="hiR-gZ-GZc" userLabel="Loading Footer">
-                                    <rect key="frame" x="0.0" y="234" width="414" height="50"/>
+                                    <rect key="frame" x="0.0" y="184" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-sI-8WM" customClass="LoadingFooterView" customModule="MovieSearchApp" customModuleProvider="target">
@@ -109,19 +91,42 @@
                                     </constraints>
                                 </collectionReusableView>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyj-Qx-aqG" userLabel="Error View">
+                                <rect key="frame" x="0.0" y="44" width="414" height="80.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qZ-8b-ucr" userLabel="ErrorLabel">
+                                        <rect key="frame" x="25" y="50" width="364" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="9qZ-8b-ucr" secondAttribute="trailing" constant="25" id="9gR-gZ-wmf"/>
+                                    <constraint firstItem="9qZ-8b-ucr" firstAttribute="top" secondItem="wyj-Qx-aqG" secondAttribute="top" constant="50" id="T8E-1b-6xu"/>
+                                    <constraint firstItem="9qZ-8b-ucr" firstAttribute="leading" secondItem="wyj-Qx-aqG" secondAttribute="leading" constant="25" id="cGl-76-gqq"/>
+                                    <constraint firstAttribute="bottom" secondItem="9qZ-8b-ucr" secondAttribute="bottom" constant="10" id="hSi-LW-Wpz"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gyq-jq-j1X" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="0mY-cz-qNO"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gyq-jq-j1X" secondAttribute="bottom" id="GKN-wn-ZoN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wyj-Qx-aqG" secondAttribute="trailing" id="Huy-HA-j1k"/>
                             <constraint firstItem="gyq-jq-j1X" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="i6k-Kd-4YI"/>
+                            <constraint firstItem="wyj-Qx-aqG" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="og0-At-Psv"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gyq-jq-j1X" secondAttribute="trailing" id="uIp-1G-cO4"/>
+                            <constraint firstItem="wyj-Qx-aqG" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="wlz-ae-z78"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mZL-HF-S4I"/>
                     <connections>
                         <outlet property="collectionView" destination="gyq-jq-j1X" id="D4p-ni-Toh"/>
+                        <outlet property="errorLabel" destination="9qZ-8b-ucr" id="MPE-CW-hZZ"/>
+                        <outlet property="errorView" destination="wyj-Qx-aqG" id="wM9-Pv-bns"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
