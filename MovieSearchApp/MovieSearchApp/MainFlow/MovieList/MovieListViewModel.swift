@@ -9,7 +9,7 @@ import Foundation
 import Bond
 
 protocol MovieListDelegate: AnyObject {
-    func wantsToShowMovieDetails()
+    func wantsToShowMovieDetails(movieData: MovieData)
 }
 
 class MovieListViewModel: NSObject {
@@ -36,6 +36,9 @@ class MovieListViewModel: NSObject {
     }
     
     func serachTextChanged(newText: String?) {
+        if newText == currentQuerry {
+            return
+        }
         resetFetchParams()
 
         if (newText == nil || newText! == "") {
@@ -60,6 +63,7 @@ class MovieListViewModel: NSObject {
     
     func didSelectItemAtIndex(index: Int) {
         let movie = moviesList.value[index]
+        delegate.wantsToShowMovieDetails(movieData: movie)
         
     }
     

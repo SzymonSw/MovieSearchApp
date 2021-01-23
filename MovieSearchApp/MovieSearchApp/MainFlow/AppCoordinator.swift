@@ -31,9 +31,9 @@ class AppCoordinator: Coordinator {
         router.setRootModule(movieListVC)
     }
     
-    private func showMovieDetails() {
+    private func showMovieDetails(movieData: MovieData) {
         let detailsVC = MovieDetailsViewController.controllerFromStoryboard("Main")
-        let detailsVM = MovieDetailsViewModel(requestManager: RequestManager())
+        let detailsVM = MovieDetailsViewModel(requestManager: requestManager, movieData: movieData)
         detailsVC.viewModel = detailsVM
         
         router.push(detailsVC)
@@ -49,11 +49,12 @@ class AppCoordinator: Coordinator {
         
         return rootNavigationController
     }
+    
 }
 
 extension AppCoordinator: MovieListDelegate {
-    func wantsToShowMovieDetails() {
-        self.showMovieDetails()
+    func wantsToShowMovieDetails(movieData: MovieData) {
+        self.showMovieDetails(movieData: movieData)
     }
     
 }

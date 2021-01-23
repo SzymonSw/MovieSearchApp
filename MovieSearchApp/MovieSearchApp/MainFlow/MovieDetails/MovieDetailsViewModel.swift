@@ -9,9 +9,11 @@ import Foundation
 class MovieDetailsViewModel {
     
     private let requestManager: RequestManager
+    private let movieData: MovieData
     
-    init(requestManager: RequestManager) {
+    init(requestManager: RequestManager, movieData: MovieData) {
         self.requestManager = requestManager
+        self.movieData = movieData
     }
 
 }

@@ -16,12 +16,13 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var errorLabel: UILabel!
     
     private let cellIndentifier = "movieCell"
+    private let footeridentifier = "loadingFooter"
     private let searchController = UISearchController(searchResultsController: nil)
     private var scrolling = false
     private let bottomOffsetToStartScrolling: CGFloat = 20.0
     
-    var loadingFooterView: UIView?
-    var tooManyRequestsHeaderView: UIView?
+    private var loadingFooterView: UIView?
+    private var tooManyRequestsHeaderView: UIView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +93,7 @@ extension MovieListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionFooter:
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingFooter", for: indexPath)
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footeridentifier, for: indexPath)
             loadingFooterView = footer
             footer.isHidden = !viewModel.isLoading.value
             return footer
@@ -106,7 +107,10 @@ extension MovieListViewController: UICollectionViewDataSource {
 }
 
 extension MovieListViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        viewModel.didSelectItemAtIndex(index: indexPath.row)
+    }
 }
 
 extension MovieListViewController: UIScrollViewDelegate {
@@ -115,7 +119,6 @@ extension MovieListViewController: UIScrollViewDelegate {
             self.scrolling = true
         } else {
             self.scrolling = false
-            
         }
     }
     
