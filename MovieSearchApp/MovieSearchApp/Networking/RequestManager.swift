@@ -73,6 +73,27 @@ class RequestManager {
         return task
     }
     
+    static func fetchImage(imageUrlString: String, completion: @escaping (_ iamgeData: Data?) -> Void) {
+        guard let url = URL(string: imageUrlString) else {
+            DispatchQueue.main.async {
+                completion(nil)
+            }
+            return
+        }
+        let task: URLSessionDataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                completion(data)
+            }
+        }
+        task.resume()
+    }
+    
 }
 
 public protocol URLRequestConvertible {

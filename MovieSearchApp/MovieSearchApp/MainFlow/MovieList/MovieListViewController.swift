@@ -14,9 +14,13 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     private let cellIndentifier = "movieCell"
-
     private let searchController = UISearchController(searchResultsController: nil)
+    private var scrolling = false
+    private let bottomOffsetToStartScrolling: CGFloat = 20.0
     
+    var loadingFooterView: UIView?
+    var tooManyRequestsHeaderView: UIView?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Movie Search"
@@ -45,10 +49,23 @@ class MovieListViewController: UIViewController {
     func bindViewModel() {
         viewModel.moviesList.bind(to: self) { (me, value) in
             me.collectionView.reloadData()
+            
+        }
+        
+        viewModel.isLoading.bind(to: self) { (me, value) in
+            self.loadingFooterView?.isHidden = !value
+            
+        }
+        
+        viewModel.error.bind(to: self) { (me, value) in
+            if value == .tooManyResults {
+                self.tooManyRequestsHeaderView?.isHidden = false
+            } else {
+                self.tooManyRequestsHeaderView?.isHidden = true
+
+            }
         }
     }
-
-    
 }
 
 extension MovieListViewController: UISearchResultsUpdating {
@@ -69,9 +86,57 @@ extension MovieListViewController: UICollectionViewDataSource {
         return cell
         
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        switch kind {
+        case UICollectionView.elementKindSectionFooter:
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "loadingFooter", for: indexPath)
+            loadingFooterView = footer
+            footer.isHidden = !viewModel.isLoading.value
+            return footer
+            
+        case UICollectionView.elementKindSectionHeader:
+            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "tooManyResultsHeader", for: indexPath)
+            tooManyRequestsHeaderView = header
+            if viewModel.error.value != nil && viewModel.error.value  == .tooManyResults {
+                header.isHidden = false
+            } else {
+                header.isHidden = true
+            }
+            return header
+            
+            
+        default:
+            print("anything")
+        }
+        return UICollectionReusableView()
+    }
 }
 
 extension MovieListViewController: UICollectionViewDelegate {
     
 }
 
+extension MovieListViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        if velocity.y > 0 {
+            self.scrolling = true
+        } else {
+            self.scrolling = false
+            
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let currentOffset = scrollView.contentOffset.y
+        let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+        
+        if maximumOffset - currentOffset <= bottomOffsetToStartScrolling {
+            if scrolling {
+                scrolling = false
+                viewModel.scrolledToEndOfList()
+            }
+        }
+        
+    }
+}

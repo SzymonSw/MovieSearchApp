@@ -23,13 +23,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Pg9-Ri-vsd">
                                     <size key="itemSize" width="194" height="184"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="50" height="50"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="movieCell" id="Cw3-Lt-J2c" customClass="MovieCell" customModule="MovieSearchApp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="194" height="184"/>
+                                        <rect key="frame" x="0.0" y="50" width="194" height="184"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="elq-yr-Fjt">
                                             <rect key="frame" x="0.0" y="0.0" width="194" height="184"/>
@@ -74,6 +74,40 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="tooManyResultsHeader" id="ORV-8F-fGe" userLabel="Too many results header">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please be more specific" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2L-cS-Nt8">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="w2L-cS-Nt8" secondAttribute="bottom" id="8cI-YJ-1JS"/>
+                                        <constraint firstItem="w2L-cS-Nt8" firstAttribute="leading" secondItem="ORV-8F-fGe" secondAttribute="leading" id="Avk-Sy-Aqc"/>
+                                        <constraint firstAttribute="trailing" secondItem="w2L-cS-Nt8" secondAttribute="trailing" id="SEV-25-29L"/>
+                                        <constraint firstItem="w2L-cS-Nt8" firstAttribute="top" secondItem="ORV-8F-fGe" secondAttribute="top" id="es4-6k-690"/>
+                                    </constraints>
+                                </collectionReusableView>
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingFooter" id="hiR-gZ-GZc" userLabel="Loading Footer">
+                                    <rect key="frame" x="0.0" y="234" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-sI-8WM" customClass="LoadingFooterView" customModule="MovieSearchApp" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="m9d-sI-8WM" firstAttribute="top" secondItem="hiR-gZ-GZc" secondAttribute="top" id="Gh0-oD-h7U"/>
+                                        <constraint firstAttribute="bottom" secondItem="m9d-sI-8WM" secondAttribute="bottom" id="TP1-C4-MlD"/>
+                                        <constraint firstItem="m9d-sI-8WM" firstAttribute="leading" secondItem="hiR-gZ-GZc" secondAttribute="leading" id="spy-5S-eE7"/>
+                                        <constraint firstAttribute="trailing" secondItem="m9d-sI-8WM" secondAttribute="trailing" id="xo9-sQ-y2H"/>
+                                    </constraints>
+                                </collectionReusableView>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
