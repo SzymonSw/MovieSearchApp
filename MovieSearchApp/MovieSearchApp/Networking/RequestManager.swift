@@ -73,12 +73,16 @@ class RequestManager {
         return task
     }
     
-    static func fetchImage(imageUrlString: String, completion: @escaping (_ iamgeData: Data?) -> Void) {
+    static func fetchImage(imageUrlString: String, completion: @escaping (_ iamgeData: Data?) -> Void) -> URLSessionDataTask? {
+        if imageUrlString == "N/A" {
+            completion(nil)
+            return nil
+        }
         guard let url = URL(string: imageUrlString) else {
             DispatchQueue.main.async {
                 completion(nil)
             }
-            return
+            return nil
         }
         let task: URLSessionDataTask =  URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else {
@@ -92,6 +96,7 @@ class RequestManager {
             }
         }
         task.resume()
+        return task
     }
     
 }

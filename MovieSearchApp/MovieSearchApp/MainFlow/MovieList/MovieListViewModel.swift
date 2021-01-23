@@ -25,10 +25,9 @@ class MovieListViewModel: NSObject {
     var moviesList = Observable<[MovieData]>([])
     var isLoading = Observable<Bool>(false)
     var error = Observable<MovieAppError?>(nil)
+    var reachedEnd = Observable<Bool>(false)
 
     var currentRequestTask: URLSessionDataTask?
-    var reachedEnd = false
-    
     
     init(requestManager: RequestManager, delegate: MovieListDelegate) {
         self.requestManager = requestManager
@@ -56,7 +55,7 @@ class MovieListViewModel: NSObject {
     }
     
     func scrolledToEndOfList() {
-        if (reachedEnd == false) {
+        if (reachedEnd.value == false) {
             fetchPage()
         }
     }
@@ -73,10 +72,11 @@ class MovieListViewModel: NSObject {
         }
 
         isLoading.value = true
+        self.error.value = nil
         currentRequestTask?.cancel()
         currentRequestTask = requestManager.makeRequest(requestData: OMDBApi.searchRepositories(query: currentQuerry, page: pageNumber), resultType: MovieSearchResult.self) { (movieSearchResult) in
             self.isLoading.value = false
-            
+
             guard movieSearchResult.response == "True",
                   let searchItems = movieSearchResult.search,
                   let totalResultsString = movieSearchResult.totalResults,
@@ -89,13 +89,12 @@ class MovieListViewModel: NSObject {
                 }
                 return
             }
-            self.error.value = nil
 
             if (searchItems.count > 0) {
                 self.pageNumber += 1
                 self.moviesList.value.append(contentsOf: searchItems)
                 if self.moviesList.value.count == totalResults {
-                    self.reachedEnd = true
+                    self.reachedEnd.value = true
                 }
             }
 
@@ -111,7 +110,7 @@ class MovieListViewModel: NSObject {
     
     private func resetFetchParams() {
         pageNumber = 1
-        reachedEnd = false
+        reachedEnd.value = false
         moviesList.value.removeAll()
     }
 

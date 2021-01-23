@@ -19,9 +19,9 @@ class MovieListViewController: UIViewController {
     private let footeridentifier = "loadingFooter"
     private let searchController = UISearchController(searchResultsController: nil)
     private var scrolling = false
-    private let bottomOffsetToStartScrolling: CGFloat = 20.0
+    private let bottomOffsetToStartScrolling: CGFloat = 0.0
     
-    private var loadingFooterView: UIView?
+    private var loadingFooterView: MovieCollectionFooterView?
     private var tooManyRequestsHeaderView: UIView?
 
     override func viewDidLoad() {
@@ -30,7 +30,8 @@ class MovieListViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+        collectionView.decelerationRate = UIScrollView.DecelerationRate.normal
+
         if let layout = collectionView?.collectionViewLayout as? UICollectionViewFlowLayout{
             layout.minimumLineSpacing = 20
             layout.minimumInteritemSpacing = 20
@@ -56,17 +57,21 @@ class MovieListViewController: UIViewController {
         }
         
         viewModel.isLoading.bind(to: self) { (me, value) in
-            self.loadingFooterView?.isHidden = !value
+            me.loadingFooterView?.loadingView.isHidden = !value
             
         }
         
         viewModel.error.bind(to: self) { (me, value) in
             if let error = value, let errorMessage = error.message {
-                self.errorView.isHidden = false
-                self.errorLabel.text = errorMessage
+                me.errorView.isHidden = false
+                me.errorLabel.text = errorMessage
             } else {
-                self.errorView.isHidden = true
+                me.errorView.isHidden = true
             }
+        }
+        
+        viewModel.reachedEnd.bind(to: self) { (me, value) in
+            me.loadingFooterView?.noMoreResultsLabel.isHidden = !value
         }
     }
 }
@@ -93,9 +98,11 @@ extension MovieListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionFooter:
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footeridentifier, for: indexPath)
+            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: footeridentifier, for: indexPath) as! MovieCollectionFooterView
             loadingFooterView = footer
-            footer.isHidden = !viewModel.isLoading.value
+            footer.loadingView.isHidden = !viewModel.isLoading.value
+            footer.noMoreResultsLabel.isHidden = !viewModel.reachedEnd.value
+
             return footer
             
             

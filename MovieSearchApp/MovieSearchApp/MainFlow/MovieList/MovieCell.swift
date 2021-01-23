@@ -11,6 +11,8 @@ class MovieCell: UICollectionViewCell {
     
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var movieTitleLabel: UILabel!
+    
+    var lastImageFetchTask: URLSessionDataTask?
         
     var movieData: MovieData! {
         didSet {
@@ -24,19 +26,19 @@ class MovieCell: UICollectionViewCell {
     }
     
     func fetchImage() {
-        movieImageView.image = UIImage(named: "image_placeholder")
-        
-        RequestManager.fetchImage(imageUrlString: movieData.poster, completion: { (imageData) in
+        lastImageFetchTask = RequestManager.fetchImage(imageUrlString: movieData.poster, completion: { (imageData) in
             guard let imageData = imageData, let image = UIImage(data: imageData) else {
+                self.movieImageView.image = UIImage(named: "image_placeholder")
                 return
             }
             self.movieImageView.image = image
             
         })
         
-//        if let url = URL(string: movieData.poster), let data = try? Data(contentsOf: url) {
-//            let image = UIImage(data: data)
-//            movieImageView.image = image
-//        }
+    }
+    
+    override func prepareForReuse() {
+        lastImageFetchTask?.cancel()
+        movieImageView.image = UIImage(named: "image_placeholder")
     }
 }

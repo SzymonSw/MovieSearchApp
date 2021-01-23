@@ -74,21 +74,35 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingFooter" id="hiR-gZ-GZc" userLabel="Loading Footer">
+                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="loadingFooter" id="hiR-gZ-GZc" userLabel="Loading Footer" customClass="MovieCollectionFooterView" customModule="MovieSearchApp" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="184" width="414" height="50"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No more results" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUS-gP-dhE">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-sI-8WM" customClass="LoadingFooterView" customModule="MovieSearchApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="EUS-gP-dhE" secondAttribute="bottom" id="DwI-QB-1HT"/>
                                         <constraint firstItem="m9d-sI-8WM" firstAttribute="top" secondItem="hiR-gZ-GZc" secondAttribute="top" id="Gh0-oD-h7U"/>
+                                        <constraint firstItem="EUS-gP-dhE" firstAttribute="top" secondItem="hiR-gZ-GZc" secondAttribute="top" id="LUg-Qi-5BD"/>
+                                        <constraint firstAttribute="trailing" secondItem="EUS-gP-dhE" secondAttribute="trailing" id="SOD-B8-qTh"/>
                                         <constraint firstAttribute="bottom" secondItem="m9d-sI-8WM" secondAttribute="bottom" id="TP1-C4-MlD"/>
+                                        <constraint firstItem="EUS-gP-dhE" firstAttribute="leading" secondItem="hiR-gZ-GZc" secondAttribute="leading" id="fr9-BQ-rgu"/>
                                         <constraint firstItem="m9d-sI-8WM" firstAttribute="leading" secondItem="hiR-gZ-GZc" secondAttribute="leading" id="spy-5S-eE7"/>
                                         <constraint firstAttribute="trailing" secondItem="m9d-sI-8WM" secondAttribute="trailing" id="xo9-sQ-y2H"/>
                                     </constraints>
+                                    <connections>
+                                        <outlet property="loadingView" destination="m9d-sI-8WM" id="tNN-jU-vJQ"/>
+                                        <outlet property="noMoreResultsLabel" destination="EUS-gP-dhE" id="xcM-jh-Xkk"/>
+                                    </connections>
                                 </collectionReusableView>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wyj-Qx-aqG" userLabel="Error View">
