@@ -22,7 +22,7 @@ class MovieListViewModel: NSObject {
     private let itemsPerPage = 25
     private let nextQuerryDelay: TimeInterval = 0.5
     
-    var moviesList = Observable<[MovieData]>([])
+    var moviesList = MutableObservableArray<MovieData>([])
     var isLoading = Observable<Bool>(false)
     var error = Observable<MovieAppError?>(nil)
     var reachedEnd = Observable<Bool>(false)
@@ -61,7 +61,7 @@ class MovieListViewModel: NSObject {
     }
     
     func didSelectItemAtIndex(index: Int) {
-        let movie = moviesList.value[index]
+        let movie = moviesList[index]
         delegate.wantsToShowMovieDetails(movieData: movie)
         
     }
@@ -92,8 +92,11 @@ class MovieListViewModel: NSObject {
 
             if (searchItems.count > 0) {
                 self.pageNumber += 1
-                self.moviesList.value.append(contentsOf: searchItems)
-                if self.moviesList.value.count == totalResults {
+                
+                for item in searchItems {
+                    self.moviesList.append(item)
+                }
+                if self.moviesList.count == totalResults {
                     self.reachedEnd.value = true
                 }
             }
@@ -111,7 +114,7 @@ class MovieListViewModel: NSObject {
     private func resetFetchParams() {
         pageNumber = 1
         reachedEnd.value = false
-        moviesList.value.removeAll()
+        moviesList.removeAll()
     }
 
 }

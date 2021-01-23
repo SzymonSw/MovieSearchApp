@@ -19,7 +19,7 @@ class MovieListViewController: UIViewController {
     private let footeridentifier = "loadingFooter"
     private let searchController = UISearchController(searchResultsController: nil)
     private var scrolling = false
-    private let bottomOffsetToStartScrolling: CGFloat = 0.0
+    private let bottomOffsetToStartScrolling: CGFloat = 20.0
     
     private var loadingFooterView: MovieCollectionFooterView?
     private var tooManyRequestsHeaderView: UIView?
@@ -51,9 +51,20 @@ class MovieListViewController: UIViewController {
     }
     
     func bindViewModel() {
-        viewModel.moviesList.bind(to: self) { (me, value) in
-            me.collectionView.reloadData()
-            
+
+        let _ = viewModel.moviesList.observeNext { (e) in
+            let inserts = e.diff.inserts
+            var insertedIndexPaths: [IndexPath] = []
+
+            for insertIndex in inserts {
+                insertedIndexPaths.append(IndexPath(row: insertIndex, section: 0))
+            }
+            if insertedIndexPaths.count > 0 {
+                self.collectionView.insertItems(at: insertedIndexPaths)
+
+            } else {
+                self.collectionView.reloadData()
+            }
         }
         
         viewModel.isLoading.bind(to: self) { (me, value) in
@@ -85,12 +96,12 @@ extension MovieListViewController: UISearchResultsUpdating {
 
 extension MovieListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.moviesList.value.count
+        return viewModel.moviesList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIndentifier, for: indexPath) as! MovieCell
-        cell.movieData = viewModel.moviesList.value[indexPath.row]
+        cell.movieData = viewModel.moviesList[indexPath.row]
         return cell
         
     }
