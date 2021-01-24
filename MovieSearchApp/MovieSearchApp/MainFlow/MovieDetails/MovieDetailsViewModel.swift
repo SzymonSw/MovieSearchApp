@@ -15,5 +15,19 @@ class MovieDetailsViewModel {
         self.requestManager = requestManager
         self.movieData = movieData
     }
+    
+    func viewWillAppear() {
+        fetchMovieDetails()
+    }
+    
+    func fetchMovieDetails() {
+        requestManager.makeRequest(requestData: OMDBApi.movieDetails(movieId: movieData.imdbID), resultType: MovieDetails.self) { (result) in
+            print(result)
+            
+        } fail: { (error) in
+            print(error)
+        }
+     
+    }
 
 }

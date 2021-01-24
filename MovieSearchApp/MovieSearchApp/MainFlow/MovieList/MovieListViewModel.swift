@@ -75,7 +75,7 @@ class MovieListViewModel: NSObject {
         isLoading.value = true
         self.error.value = nil
         currentRequestTask?.cancel()
-        currentRequestTask = requestManager.makeRequest(requestData: OMDBApi.searchRepositories(query: currentQuerry, page: pageNumber), resultType: MovieSearchResult.self) { (movieSearchResult) in
+        currentRequestTask = requestManager.makeRequest(requestData: OMDBApi.searchMovies(query: currentQuerry, page: pageNumber), resultType: MovieSearchResult.self) { (movieSearchResult) in
             self.isLoading.value = false
 
             guard movieSearchResult.response == "True",

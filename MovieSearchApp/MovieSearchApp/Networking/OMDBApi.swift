@@ -8,8 +8,9 @@
 import Foundation
 
 enum OMDBApi: URLRequestConvertible {
-    case searchRepositories(query: String, page: Int)
-    
+    case searchMovies(query: String, page: Int)
+    case movieDetails(movieId: String)
+
     static let apiKey = "b9bd48a6"
 
     var encoder: JSONEncoder {
@@ -21,8 +22,9 @@ enum OMDBApi: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .searchRepositories:
+        case .searchMovies, .movieDetails:
             return .get
+            
         }
     }
     
@@ -32,11 +34,15 @@ enum OMDBApi: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .searchRepositories (let queryString, let page):
+        case .searchMovies (let queryString, let page):
             let path = "/?apikey=\(OMDBApi.apiKey)&s=\(queryString)&type=movie&page=\(page)&r=json"
             let escapedurlString = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
             return escapedurlString
-
+            
+        case .movieDetails (let movieId):
+            let path = "/?apikey=\(OMDBApi.apiKey)&i=\(movieId)"
+            let escapedurlString = path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+            return escapedurlString
         }
     }
     
@@ -46,7 +52,7 @@ enum OMDBApi: URLRequestConvertible {
         urlRequest.httpMethod = method.rawValue
         
         switch self {
-        case .searchRepositories:
+        case .searchMovies, .movieDetails:
             return urlRequest as URLRequest
         
         }

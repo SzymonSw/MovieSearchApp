@@ -16,5 +16,10 @@ class MovieDetailsViewController: UIViewController {
         self.title = "Movie Details"
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel.viewWillAppear()
+    }
 
 }

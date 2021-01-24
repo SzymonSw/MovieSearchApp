@@ -15,13 +15,10 @@ class RequestManager {
         self.session = session
     }
     
-    func makeRequest<T>(requestData: URLRequestConvertible,
+    @discardableResult func makeRequest<T>(requestData: URLRequestConvertible,
                         resultType: T.Type,
-                        auth: Bool = true,
                         success: @escaping (T) -> Void,
-                        fail: @escaping (MovieAppError) -> Void,
-                        eTag: String? = nil,
-                        eTagMatch: @escaping (() -> Void) = {}) -> URLSessionDataTask where T: Codable {
+                        fail: @escaping (MovieAppError) -> Void) -> URLSessionDataTask where T: Codable {
         
         let requestDataConverted = requestData.asURLRequest()
         
@@ -47,8 +44,8 @@ class RequestManager {
                 return
             }
             
-          //  let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
-          //  print(jsonRaw)
+            let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
+            print(jsonRaw)
             
             let jsonDecoder = JSONDecoder()
             let dateFormatter = DateFormatter.default
