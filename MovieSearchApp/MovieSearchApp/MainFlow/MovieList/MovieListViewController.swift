@@ -89,7 +89,7 @@ class MovieListViewController: UIViewController {
 
 extension MovieListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        viewModel.serachTextChanged(newText: searchController.searchBar.text)
+        viewModel.searchTextChanged(newText: searchController.searchBar.text)
         
     }
 }

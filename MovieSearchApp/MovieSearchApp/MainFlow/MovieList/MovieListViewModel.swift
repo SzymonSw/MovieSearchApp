@@ -34,7 +34,7 @@ class MovieListViewModel: NSObject {
         self.delegate = delegate
     }
     
-    func serachTextChanged(newText: String?) {
+    func searchTextChanged(newText: String?) {
         if newText == currentQuerry {
             return
         }
