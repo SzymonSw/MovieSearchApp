@@ -26,22 +26,26 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var actorsLabel: UILabel!
     
     lazy var loadingView: UIView = {
+        let loader = LoadingFooterView()
+        loader.translatesAutoresizingMaskIntoConstraints = false
+
+        whiteCoverView.addSubview(loader)
+        loader.centerXAnchor.constraint(equalTo: whiteCoverView.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo: whiteCoverView.centerYAnchor).isActive = true
+        loader.activityIndicator.startAnimating()
+        return loader
+    }()
+    
+    lazy var whiteCoverView: UIView = {
         let background = UIView()
         background.backgroundColor = .white
         background.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(background)
+        
         background.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
         background.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
         background.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         background.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-        
-        let loader = LoadingFooterView()
-        loader.translatesAutoresizingMaskIntoConstraints = false
-
-        background.addSubview(loader)
-        loader.centerXAnchor.constraint(equalTo: background.centerXAnchor).isActive = true
-        loader.centerYAnchor.constraint(equalTo:background.centerYAnchor).isActive = true
-        loader.activityIndicator.startAnimating()
         return background
     }()
     
@@ -49,6 +53,7 @@ class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         self.title = "Movie Details"
         self.bindViewModel()
+        self.whiteCoverView.isHidden = false
 
     }
     
@@ -89,7 +94,28 @@ class MovieDetailsViewController: UIViewController {
         
         self.viewModel.isLoading.bind(to: self) { (me, value) in
             me.loadingView.isHidden = !value
+            me.whiteCoverView.isHidden = !value
+
         }
+        
+        self.viewModel.error.bind(to: self) { (me, value) in
+            if let value = value {
+                self.whiteCoverView.isHidden = false
+                me.showError(error: value)
+            } else {
+                self.whiteCoverView.isHidden = true
+
+            }
+        }
+    }
+    
+    func showError(error: MovieAppError) {
+        let alert = UIAlertController(title: error.title, message: error.message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) { (action) in
+            self.viewModel.goBack()
+        }
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
