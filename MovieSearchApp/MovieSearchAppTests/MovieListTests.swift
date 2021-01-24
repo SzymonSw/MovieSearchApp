@@ -36,6 +36,41 @@ class MovieSearchAppTests: XCTestCase {
             XCTFail("Mock call should be finished by now.")
         }
     }
+    
+    func testTextInputDeleted() throws {
+        try testTextInputChanged()
+
+        viewModel.searchTextChanged(newText: nil)
+
+        let exp = expectation(description: "Wait for mock call to finish")
+        let result = XCTWaiter.wait(for: [exp], timeout: 0.8)
+        if result == XCTWaiter.Result.timedOut {
+            XCTAssert(viewModel.moviesList.count == 0, "Items should be empty when user removes input text.")
+        } else {
+            XCTFail("Mock call should be finished by now.")
+        }
+    }
+    
+    func testEndPageRached() throws {
+        try testTextInputChanged()
+        
+        viewModel.scrolledToEndOfList()
+        
+        let exp = expectation(description: "Wait for mock call to finish")
+        let result = XCTWaiter.wait(for: [exp], timeout: 0.8)
+        if result == XCTWaiter.Result.timedOut {
+            XCTAssert(viewModel.moviesList.count == 20, "More items should be fetched and added to list when user reaches bottom of the list.")
+        } else {
+            XCTFail("Mock call should be finished by now.")
+        }
+    }
+    
+    func testItemSelected() throws {
+        try testTextInputChanged()
+        viewModel.didSelectItemAtIndex(index: 0)
+        XCTAssert(wantsToShowDetails_called, "AFter user selects list item, app should open its url.")
+
+    }
 
 }
 
