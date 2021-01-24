@@ -25,6 +25,26 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var writerLabel: UILabel!
     @IBOutlet weak var actorsLabel: UILabel!
     
+    lazy var loadingView: UIView = {
+        let background = UIView()
+        background.backgroundColor = .white
+        background.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(background)
+        background.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        background.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
+        background.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        background.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+        
+        let loader = LoadingFooterView()
+        loader.translatesAutoresizingMaskIntoConstraints = false
+
+        background.addSubview(loader)
+        loader.centerXAnchor.constraint(equalTo: background.centerXAnchor).isActive = true
+        loader.centerYAnchor.constraint(equalTo:background.centerYAnchor).isActive = true
+        loader.activityIndicator.startAnimating()
+        return background
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Movie Details"
@@ -55,6 +75,8 @@ class MovieDetailsViewController: UIViewController {
             me.writerLabel.text = value.writer
             me.actorsLabel.text = value.actors
             
+            me.posterImageView.image = UIImage(named: "image_placeholder")
+
             RequestManager.fetchImage(imageUrlString: value.poster, completion: { (imageData) in
                 guard let imageData = imageData, let image = UIImage(data: imageData) else {
                     me.posterImageView.image = UIImage(named: "image_placeholder")
@@ -64,7 +86,10 @@ class MovieDetailsViewController: UIViewController {
                 
             })
         }
+        
+        self.viewModel.isLoading.bind(to: self) { (me, value) in
+            me.loadingView.isHidden = !value
+        }
     }
-    
 
 }
