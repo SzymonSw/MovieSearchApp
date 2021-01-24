@@ -44,8 +44,8 @@ class RequestManager {
                 return
             }
             
-            let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
-            print(jsonRaw)
+          //  let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
+          //  print(jsonRaw)
             
             let jsonDecoder = JSONDecoder()
             let dateFormatter = DateFormatter.default
@@ -70,7 +70,7 @@ class RequestManager {
         return task
     }
     
-    static func fetchImage(imageUrlString: String, completion: @escaping (_ iamgeData: Data?) -> Void) -> URLSessionDataTask? {
+    @discardableResult static func fetchImage(imageUrlString: String, completion: @escaping (_ iamgeData: Data?) -> Void) -> URLSessionDataTask? {
         if imageUrlString == "N/A" {
             completion(nil)
             return nil
