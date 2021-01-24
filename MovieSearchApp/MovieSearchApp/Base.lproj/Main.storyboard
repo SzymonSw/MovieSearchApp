@@ -84,7 +84,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-sI-8WM" customClass="LoadingFooterView" customModule="MovieSearchApp" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-sI-8WM" customClass="LoadingView" customModule="MovieSearchApp" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
@@ -553,7 +553,7 @@
                             <constraint firstItem="q86-Ot-sWR" firstAttribute="top" secondItem="YKg-Wt-Fzd" secondAttribute="top" id="FPC-QE-wxk"/>
                             <constraint firstItem="q86-Ot-sWR" firstAttribute="trailing" secondItem="YKg-Wt-Fzd" secondAttribute="trailing" id="IxE-Xm-3f8"/>
                             <constraint firstItem="q86-Ot-sWR" firstAttribute="bottom" secondItem="YKg-Wt-Fzd" secondAttribute="bottom" id="OYJ-6u-OiQ"/>
-                            <constraint firstItem="H2X-0E-cig" firstAttribute="width" secondItem="idr-cP-ZKR" secondAttribute="width" id="cTD-bN-1Fo"/>
+                            <constraint firstItem="H2X-0E-cig" firstAttribute="width" secondItem="YKg-Wt-Fzd" secondAttribute="width" id="eLd-AT-kdS"/>
                             <constraint firstItem="q86-Ot-sWR" firstAttribute="leading" secondItem="YKg-Wt-Fzd" secondAttribute="leading" id="rEw-ZZ-3T2"/>
                         </constraints>
                     </view>

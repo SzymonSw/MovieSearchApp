@@ -26,7 +26,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var actorsLabel: UILabel!
     
     lazy var loadingView: UIView = {
-        let loader = LoadingFooterView()
+        let loader = LoadingView()
         loader.translatesAutoresizingMaskIntoConstraints = false
 
         whiteCoverView.addSubview(loader)

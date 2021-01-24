@@ -10,6 +10,6 @@ import UIKit
 class MovieCollectionFooterView: UICollectionReusableView {
         
     @IBOutlet weak var noMoreResultsLabel: UILabel!
-    @IBOutlet weak var loadingView: LoadingFooterView!
+    @IBOutlet weak var loadingView: LoadingView!
     
 }

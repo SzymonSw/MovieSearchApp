@@ -1,5 +1,5 @@
 //
-//  LoadingFooter.swift
+//  LoadingView.swift
 //  MovieSearchApp
 //
 //  Created by Szymon Świętek on 23/01/2021.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoadingFooterView: UIView {
+class LoadingView: UIView {
     
     lazy var activityIndicator: UIActivityIndicatorView = {
         let activityIndicator = UIActivityIndicatorView(style: .large)
