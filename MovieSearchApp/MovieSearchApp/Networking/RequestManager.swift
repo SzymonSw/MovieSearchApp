@@ -47,10 +47,7 @@ class RequestManager {
           //  let jsonRaw = try? JSONSerialization.jsonObject(with: reponseData) as? [String: Any]
           //  print(jsonRaw)
             
-            let jsonDecoder = JSONDecoder()
-            let dateFormatter = DateFormatter.default
-            jsonDecoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.formatted(dateFormatter)
-            
+            let jsonDecoder = JSONDecoder()            
             do {
                 let parsedResponse = try jsonDecoder.decode(resultType, from: reponseData)
                 DispatchQueue.main.async {

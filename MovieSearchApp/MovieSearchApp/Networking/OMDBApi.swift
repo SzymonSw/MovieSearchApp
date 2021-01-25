@@ -12,13 +12,6 @@ enum OMDBApi: URLRequestConvertible {
     case movieDetails(movieId: String)
 
     static let apiKey = "b9bd48a6"
-
-    var encoder: JSONEncoder {
-        let dateFormatter = DateFormatter.default
-        let encoder = JSONEncoder()
-        encoder.dateEncodingStrategy = .formatted(dateFormatter)
-        return encoder
-    }
     
     var method: HTTPMethod {
         switch self {
