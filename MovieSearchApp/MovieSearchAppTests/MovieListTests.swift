@@ -8,7 +8,7 @@
 import XCTest
 @testable import MovieSearchApp
 
-class MovieSearchAppTests: XCTestCase {
+class MovieListTests: XCTestCase {
     
     var viewModel: MovieListViewModel!
     
@@ -75,7 +75,7 @@ class MovieSearchAppTests: XCTestCase {
 }
 
 
-extension MovieSearchAppTests: MovieListDelegate {
+extension MovieListTests: MovieListDelegate {
     func wantsToShowMovieDetails(movieData: MovieData) {
         wantsToShowDetails_called = true
     }
